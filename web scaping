@@ -1,0 +1,31 @@
+from bs4 import BeautifulSoup as soup
+from urllib.request import urlopen as uReq
+url = "https://www.flipkart.com/search?q=phones&sid=tyy%2C4io&as=on&as-show=on&otracker=AS_QueryStore_OrganicAutoSuggest_1_5_na_na_na&otracker1=AS_QueryStore_OrganicAutoSuggest_1_5_na_na_na&as-pos=1&as-type=RECENT&suggestionId=phones%7CMobiles&requestId=99078e04-2a84-4bbb-86af-92fc2ed905f7&as-backfill=on"
+uclient = uReq(url)
+page = uclient.read()
+uclient.close()
+pages = soup(page)
+container = pages.find("div",class_="_1UoZlX")
+#print(len(container))
+#print(soup.prettify(container))
+#print(container.div.img["alt"])
+
+#contains = pages.find("div",class_="col col-5-12 _2o7WAb")
+#print(contains.text)
+
+#contain = pages.find("div",class_="niH0FQ")
+#print(contain.text)
+print("             __THE NEW PRODUCT AS FOLLOWS__")
+
+for x in container:
+    title = x.div.img["alt"]
+    prize = x.find("div",class_="col col-5-12 _2o7WAb")
+    p = prize.text.strip()
+    rates = x.find("div",class_="niH0FQ")
+    r = rates.text.strip()
+    
+    print("Product name ="+title)
+    print("Prize ="+p)
+    print("rating is as follows ="+r)
+
+
